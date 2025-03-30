@@ -1,8 +1,10 @@
+import { useState, useEffect } from 'react';
 import Header from './components/Header';
 import Subheader from './components/Subheader';
 import ListContainer from './components/ListContainer';
 import ListHeader from './components/ListHeader';
 import ItemsList from './components/ItemsList';
+import TaskForm from './components/TaskForm';
 import styles from './App.module.css';
 
 const mockTodos = [
@@ -34,6 +36,19 @@ const mockTodos = [
 ];
 
 function App() {
+  const [todos, setTodos] = useState(() => {
+    const saved = localStorage.getItem('todos');
+    return saved ? JSON.parse(saved) : mockTodos;
+  });
+
+  useEffect(() => {
+    localStorage.setItem('todos', JSON.stringify(todos));
+  }, [todos]);
+
+  const handleAddTask = (newTask) => {
+    setTodos([...todos, newTask]);
+  };
+
   return (
     <div className={styles.app}>
       <header className={styles.app__header}>
@@ -41,9 +56,10 @@ function App() {
         <Subheader subtitle="Todo List Manager" />
       </header>
       <main className={styles.app__main}>
+        <TaskForm onAddTask={handleAddTask} />
         <ListContainer>
           <ListHeader content="Todo List" />
-          <ItemsList itemsList={mockTodos} />
+          <ItemsList itemsList={todos} />
         </ListContainer>
       </main>
     </div>
