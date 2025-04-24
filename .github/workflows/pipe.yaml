@@ -1,0 +1,21 @@
+name: Pull request 
+
+on: 
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize]
+  push:
+      branches: [main]
+jobs:
+  test:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: chekcout
+        uses: actions/checkout@v4
+      - name: intsall node
+        uses: actions/setup-node@4
+      - name: install node
+        run: npm install
+      - name: execute
+        uses: npm test
+
