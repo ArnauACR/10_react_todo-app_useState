@@ -1,0 +1,32 @@
+name: pipe
+
+on: 
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize]
+  push:
+      branches: [main]
+jobs:
+  test:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: checkcout
+        uses: actions/checkout@v4
+      - name: install Node
+        uses: actions/setup-node@4
+      - name: install dependencies
+        run: npm install
+      - name: execute
+        uses: npm test
+  lint:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: checkcout
+        uses: actions/checkout@v4
+      - name: install Node
+        uses: actions/setup-node@4
+      - name: install dependencies
+        run: npm install
+      - name: execute
+        uses: npm run lint
+
