@@ -10,12 +10,23 @@ jobs:
   test:
     runs-on: ubuntu-22.04
     steps:
-      - name: chekcout
+      - name: checkcout
         uses: actions/checkout@v4
-      - name: intsall node
+      - name: install Node
         uses: actions/setup-node@4
-      - name: install node
+      - name: install dependencies
         run: npm install
       - name: execute
         uses: npm test
+  lint:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: checkcout
+        uses: actions/checkout@v4
+      - name: install Node
+        uses: actions/setup-node@4
+      - name: install dependencies
+        run: npm install
+      - name: execute
+        uses: npm run lint
 
